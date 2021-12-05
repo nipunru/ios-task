@@ -16,11 +16,19 @@ class CampaignListingView: UICollectionView {
      Displays the given campaign list.
      */
     func display(campaigns: [Campaign]) {
+        updateLayout()
+        
         let campaignDataSource = ListingDataSource(campaigns: campaigns)
         dataSource = campaignDataSource
         delegate = campaignDataSource
         strongDataSource = campaignDataSource
         reloadData()
+    }
+    
+    func updateLayout() {
+        if let flowLayout = self.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        }
     }
 
     struct Campaign {
@@ -78,12 +86,6 @@ class ListingDataSource: NSObject, UICollectionViewDataSource, UICollectionViewD
         }
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: 450)
-    }
-
 }
 
 
